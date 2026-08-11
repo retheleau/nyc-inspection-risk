@@ -1,0 +1,9 @@
+# Streamlit's own theme hooks. These control the widget accents (multiselect
+# chips, slider track, buttons, focus rings) that CSS overrides can't reach
+# reliably, because Streamlit generates those class names per build.
+[theme]
+primaryColor = "#0B5EA8"
+backgroundColor = "#EEF1F4"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#0C1D2E"
+font = "sans serif"
