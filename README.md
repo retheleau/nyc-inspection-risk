@@ -32,6 +32,8 @@ which is essentially "did they fail last time." The shipped model reaches 0.681.
 That is a real gain but a modest one, and most of the signal is still prior
 failure.
 
+Recall appears worse than the baseline (0.319 vs 0.519), which is a cutoff artifact, not a paradox. Accuracy, precision and recall are all recorded at the default 0.5 threshold; AUC records how well the model ranks across every possible threshold. The model ranks better; its default operating point is just too conservative, which is why the threshold belongs in the next section.
+
 ### What it looks like in practice
 
 The output is not a probability column, it is a ranked queue. The threshold is
