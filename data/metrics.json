@@ -1,0 +1,85 @@
+{
+  "n_train": 15599,
+  "n_test": 7280,
+  "test_base_rate": 0.40535714285714286,
+  "used_cuisine": false,
+  "auc_with_cuisine": 0.6812774899864021,
+  "auc_without_cuisine": 0.6812774899864021,
+  "models": [
+    {
+      "model": "always predict pass",
+      "accuracy": 0.5946428571428571,
+      "precision": 0.0,
+      "recall": 0.0,
+      "auc": null
+    },
+    {
+      "model": "own prior fail rate",
+      "accuracy": 0.6516483516483517,
+      "precision": 0.5783314458286146,
+      "recall": 0.5191460521856998,
+      "auc": 0.6445964380562821
+    },
+    {
+      "model": "logistic regression",
+      "accuracy": 0.6418956043956044,
+      "precision": 0.6118335500650195,
+      "recall": 0.31887495764147744,
+      "auc": 0.6812774899864021
+    },
+    {
+      "model": "gradient boosting",
+      "accuracy": 0.6480769230769231,
+      "precision": 0.6057640021750952,
+      "recall": 0.3774991528295493,
+      "auc": 0.6725974860505528
+    }
+  ],
+  "capacity": [
+    {
+      "capacity": 500,
+      "threshold": 0.6321387321681722,
+      "caught": 337,
+      "total_failures": 2951,
+      "catch_rate": 0.11419857675364284,
+      "precision": 0.674,
+      "lift": 1.6627312775330398
+    },
+    {
+      "capacity": 1000,
+      "threshold": 0.5537481799772658,
+      "caught": 641,
+      "total_failures": 2951,
+      "catch_rate": 0.2172145035581159,
+      "precision": 0.641,
+      "lift": 1.5813215859030838
+    },
+    {
+      "capacity": 2000,
+      "threshold": 0.4584914597627347,
+      "caught": 1209,
+      "total_failures": 2951,
+      "catch_rate": 0.40969162995594716,
+      "precision": 0.6045,
+      "lift": 1.4912775330396477
+    },
+    {
+      "capacity": 3000,
+      "threshold": 0.3557455251259308,
+      "caught": 1675,
+      "total_failures": 2951,
+      "catch_rate": 0.5676042019654355,
+      "precision": 0.5583333333333333,
+      "lift": 1.3773861967694567
+    },
+    {
+      "capacity": 5000,
+      "threshold": 0.2680979658623509,
+      "caught": 2406,
+      "total_failures": 2951,
+      "catch_rate": 0.8153168417485598,
+      "precision": 0.4812,
+      "lift": 1.1871013215859032
+    }
+  ]
+}
