@@ -58,4 +58,55 @@ but the hit rate drops — at 5,000 you find 82% of all failures at a 48% hit
 rate. That trade-off belongs to the operations team, and the app lets them
 move it.
 
+## Data
+
+[DOHMH New York City Restaurant Inspection Results](https://data.cityofnewyork.us/Health/DOHMH-New-York-City-Restaurant-Inspection-Results/43nn-pn8j),
+NYC Open Data, pulled through the Socrata API — 291,245 rows.
+
+The raw feed is violation-level, not inspection-level. An inspection that cites
+four violations produces four rows, with the establishment, date, score and
+grade repeated on each. The first thing the pipeline does is collapse it to one
+row per establishment-inspection, keyed on `camis` and `inspection_date`.
+Without that step, restaurants with more violations would be weighted more
+heavily purely as an artifact of the file format.
+
+Three filters, applied in that order:
+
+- **Pre-2022 rows dropped.** The dataset holds a rolling three-year window.
+  About 2,800 rows are scattered across 2010–2021 against 288,000 from 2022
+  onward — stragglers, not history.
+- **Cycle Inspection / Initial Inspection only.** Re-inspections exist only
+  because an establishment already failed, so including them puts the outcome
+  into the sample selection. Pre-permit inspections are brand-new
+  establishments with no inspection history to build features from.
+- **Records with borough written as `0` removed.** 57 inspections with no
+  borough assigned.
+
+What remains: **45,817 inspections**, of which **22,879** are usable for
+modelling once each row is required to have at least one prior inspection
+behind it.
+
+## Label
+
+The obvious target is the letter grade. It doesn't work.
+
+On Cycle Initial inspections the grade column holds 26,870 A's, 19,249 blanks,
+376 N's and a single C. No B's at all — in a city where B and C placards hang
+in windows everywhere.
+
+The blanks aren't clerical gaps. Graded inspections average 9.4 points;
+ungraded ones average 28.8. DOHMH awards an A on the spot when an
+establishment passes; anything worse goes to re-inspection and is graded
+there. So the missing grades *are* the failures — missing not at random, on
+exactly the outcome being predicted. Using grade as the label and dropping the
+nulls would delete every failure and train a model on a dataset where everyone
+passed. It would score beautifully and be worthless.
+
+Score is complete where grade is 41% missing, so the label is score-based:
+
+`failed_a = score > 13`
+
+13 is DOHMH's own A threshold, confirmed from the data — the maximum score
+among A-graded inspections is exactly 13.0.
+
 
