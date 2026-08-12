@@ -1,5 +1,7 @@
 ﻿data/*.csv
 data/*.json
+!data/scored_test.csv
+!data/metrics.json
 models/*.joblib
 __pycache__/
 *.pyc
