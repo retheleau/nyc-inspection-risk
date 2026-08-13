@@ -161,4 +161,43 @@ number is real, but you can no longer say what it means, so you can't use it
 safely.
 
 
+## Limitations
+
+These are the weak points I know about. Anyone reading the model carefully
+would find them, so they belong here rather than in a follow-up question.
+
+**Thin history.** `prior_n` has a median of 1 and a maximum of 4, because the
+dataset holds a rolling three-year window. For more than half the rows
+`prior_fail_rate` is 0 or 1 — closer to a binary flag than a rate. More history
+would likely improve the model and is not available in this source.
+
+**Upward drift.** The failure rate rises across years: 0.365 in 2024, 0.380 in
+2025, 0.405 in 2026. A model trained on 2024–25 runs slightly optimistic on
+2026. In production this is the kind of drift that needs monitoring.
+
+**Modest gain.** 0.645 to 0.681 is real but not dramatic. Most of the signal is
+still "did they fail last time," and dropping cuisine gave one point back
+deliberately.
+
+**The label is narrower than it sounds.** `failed_a` means an establishment did
+not earn an A on the routine inspection — not that it is a bad restaurant.
+Letters for those are assigned at re-inspection, and 25,871 of them go on to
+earn an A there. The model ranks who is likely to miss the A on the first
+visit.
+
+**Selection.** The model is trained on inspections DOHMH chose to conduct. If
+scheduling is already risk-driven, the sample is not a random draw of all
+establishments.
+
+**Data quality.** DOHMH documents that the feed contains illogical values from
+data entry and transfer errors. 209 ungraded inspections scored at or below the
+A threshold and were left in rather than silently dropped.
+
+**Feedback loop.** Inspecting the establishments the model flags writes their
+next history rows, which then feed future predictions. A model that keeps
+sending inspectors to the same places will keep finding violations there and
+never learn about the places it stopped visiting. A real deployment would need
+a randomised holdout — a share of inspections assigned without reference to the
+model — so there is still an unbiased sample to evaluate against.
+
 
