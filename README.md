@@ -110,3 +110,55 @@ Score is complete where grade is 41% missing, so the label is score-based:
 among A-graded inspections is exactly 13.0.
 
 
+it's counting pairs.
+
+oh thats crazy naw ima not get this in one run ima have to do one from scratch bruh you showing me sigmas, I aint even know there could be more sigmas than megaman x fights in one equation , what thehell. ok what I got is you run the machine learning lil automatic mathemathics that get computed by the python sklearn libarary and get get borth the number with cuisine included and it not included you subtract them from eachother to get the amount loss from excluding cuisine. 
+
+so if this number is so important put that auc = 0.010 important number into this paragraph I wrote
+
+ok so to explain Cusine was withheld from the shipped model, with the switch visible in config.py so that it can be viewable by those that want to see it in action. Because we could not exactly explain why restuarants were being sent to the top of the visiting que based on certain cusines , we had to drop it because when conducting mucipality business you have to be able to expalin exactly why certain restuarants are bieng targeted. To prevent things like lawsuits, and  unfair bias. so we had to remove cusine thing of it like a laboratory result in an experiment where the control was contaminated so we can no longer use it safely.
+
+Message collapsed
+Reorganized explanation and integrated performance metric
+Reorganized explanation and integrated performance metric
+
+Your summary of the method is right: fit it twice, subtract the two AUCs, and 0.010 is what cuisine was worth.
+
+Here's your paragraph with the number in and the two fixes we talked about — reason first, price second:
+
+markdown
+## Cuisine
+
+Cuisine was excluded from the shipped model, with the switch left visible in
+`src/config.py` so anyone can turn it back on and see it in action.
+
+With cuisine included, the largest coefficients in the model were cuisine
+dummies — every one of them bigger than any inspection-history feature. The
+model's strongest signal about a restaurant was what food it served, not what
+its record showed.
+
+The model cannot tell you why. The correlation could come from kitchen
+practice, from cuisine-specific code requirements, or from historical
+inspection patterns that were themselves uneven — nothing in the data separates
+them. When you are conducting municipal business you have to be able to explain
+exactly why certain restaurants are being targeted. A rule you can't explain
+invites lawsuits and unfair bias.
+
+So I priced it instead of arguing about it. The training script fits the model
+both ways and reports the difference:
+
+| Model | Test AUC |
+|---|---|
+| Logistic regression, with cuisine | 0.691 |
+| Logistic regression, without cuisine | 0.681 |
+| **Cost of dropping cuisine** | **0.010** |
+
+One hundredth of AUC. The shipped model excludes cuisine and ranks on
+inspection history plus borough, still well above the 0.645 baseline.
+
+Think of it like a laboratory result where the control was contaminated. The
+number is real, but you can no longer say what it means, so you can't use it
+safely.
+
+
+
