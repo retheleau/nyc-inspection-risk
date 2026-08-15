@@ -97,7 +97,7 @@ in windows everywhere.
 The blanks aren't clerical gaps. Graded inspections average 9.4 points;
 ungraded ones average 28.8. DOHMH awards an A on the spot when an
 establishment passes; anything worse goes to re-inspection and is graded
-there. So the missing grades *are* the failures — missing not at random, on
+there. So the missing grades *are* the restaurants that failed to receive an A and need reinspection — missing not at random, on
 exactly the outcome being predicted. Using grade as the label and dropping the
 nulls would delete every failure and train a model on a dataset where everyone
 passed. It would score beautifully and be worthless.
